@@ -92,7 +92,7 @@ void gen_data(const int len, const int blk_size, const string &dir) {
   for (int i = 0; i < block_divided_len; i++) {
     for (int j = 0; j <= i; j++) {
       vector<double> block_ij(blk_size * blk_size, 0.0);
-      ofstream block_fs{dir + "A" + to_string(i) + to_string(j),
+      ofstream block_fs{dir + "/A" + to_string(i) + to_string(j),
                         ios_base::out | ios_base::trunc};
       // copy a block
       for (int k = 0; k < blk_size; k++) {
@@ -106,21 +106,21 @@ void gen_data(const int len, const int blk_size, const string &dir) {
   }
 }
 
-int main(int argc, char *argv[]) {
-  if (argc != 4) {
-    cout << "Usage: a.out square_matrix_len block_size dst_dir" << endl;
-    return 1;
-  }
-
-  const int len = stoi(argv[1]);
-  const int blk_size = stoi(argv[2]);
-  if (len % blk_size != 0) {
-    cout << "square_matrix_len should be divisible by blk_size" << endl;
-    return 1;
-  }
-  const string dst_dir{argv[3]};
-
-  gen_data(len, blk_size, dst_dir);
-
-  return 0;
-}
+// int main(int argc, char *argv[]) {
+//   if (argc != 4) {
+//     cout << "Usage: a.out square_matrix_len block_size dst_dir" << endl;
+//     return 1;
+//   }
+//
+//   const int len = stoi(argv[1]);
+//   const int blk_size = stoi(argv[2]);
+//   if (len % blk_size != 0) {
+//     cout << "square_matrix_len should be divisible by blk_size" << endl;
+//     return 1;
+//   }
+//   const string dst_dir{argv[3]};
+//
+//   gen_data(len, blk_size, dst_dir);
+//
+//   return 0;
+// }
