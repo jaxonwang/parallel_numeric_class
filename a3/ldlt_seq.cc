@@ -48,7 +48,7 @@ vector<double> solveSym(vector<double> &a, vector<double> &b) {
 
 int main(int argc, char *argv[]) {
 
-  int n, i, j;
+  int n, i;
   n = 30;
   auto a = gen_matrix(n);
   auto solution = gen_solution(n);

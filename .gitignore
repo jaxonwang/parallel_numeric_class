@@ -32,3 +32,6 @@
 *.app
 
 *.swp
+
+ldlt_mpi
+ldlt_seq

@@ -65,7 +65,7 @@ void gen_data(const int len, const int blk_size, const string &dir) {
   auto vector_writer = [](ofstream &fs, vector<double> v) {
     if (!v.size())
       return;
-    int i = 0;
+    size_t i = 0;
     for (; i < v.size() - 1; i++) {
       fs << v[i] << endl;
     }

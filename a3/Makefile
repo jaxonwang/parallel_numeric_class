@@ -1,18 +1,15 @@
 
-datagen.o:
-	$(CXX) -std=c++11 -c datagen.cc -o datagen.o
-
-ldlt_seq.o:
-	$(CXX) -std=c++11 -c ldlt_seq.cc -o ldlt_seq.o
-
-ldlt_seq: datagen.o ldlt_seq.o
-	$(CXX) -std=c++11 ldlt_seq.o datagen.o -o ldlt_seq -lm
-
-all: ldlt_seq
-
+FLAGS=-std=c++11 -g -Wall -O0
 default: all
 
+ldlt_seq: ldlt_seq.cc datagen.cc
+	$(CXX) $(FLAGS) ldlt_seq.cc datagen.cc -o ldlt_seq -lm
+
+ldlt_mpi: ldlt_mpi.cc datagen.cc
+	export OMPI_MPICXX=$(CXX);mpic++ $(FLAGS) ldlt_mpi.cc datagen.cc -o ldlt_mpi
+
+all: ldlt_seq ldlt_mpi
+
 clean:
-	rm datagen.o
-	rm ldlt_seq.o
 	rm ldlt_seq
+	rm ldlt_mpi 
