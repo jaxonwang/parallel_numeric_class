@@ -1,5 +1,6 @@
 #include <cassert>
 #include <chrono>
+#include <cmath>
 #include <iostream>
 #include <memory>
 #include <mpi.h>
@@ -22,6 +23,7 @@ enum Tag {
   b_vector,
   matrix_block,
   L_matrix,
+  collect_result,
 };
 
 int get_rank_by_block_id(const int i, const int j) {
@@ -154,6 +156,39 @@ void ldlt(const int rank, const int len, const int blk_size, blocks_t &blocks) {
   }
 }
 
+void verify(const vector<double> expected, const vector<double> b_vector,
+            const vector<double> L) {
+
+  const int n = expected.size();
+  vector<double> solution(n, 0);
+  vector<double> b(b_vector);
+
+  for (int i = 0; i < n; i++) {
+    double t = b[i];
+    for (int j = 0; j < i; j++)
+      t -= L[i * n + j] * solution[j];
+    solution[i] = t / L[i * n + i];
+  }
+
+  /* backward solve D L^t x = y */
+  for (int i = n - 1; i >= 0; i--) {
+    double t = solution[i];
+
+    for (int j = i + 1; j < n; j++)
+      t -= L[j * n + i] * solution[j];
+
+    solution[i] = t / L[i * n + i];
+  }
+
+  double e = 0;
+  for (int i = 0; i < n; i++)
+    e += (expected[i] - solution[i]) * (expected[i] - solution[i]);
+  e = sqrt(e);
+  cout << "error norm = " << e << endl;
+  cout << "--- good if error is around n * 1e-16 = " << n * 1e-16 << " or less"
+       << endl;
+}
+
 void run(const int rank, const int len, const int blk_size) {
   unique_ptr<thread> t;
   if (rank == 0) {
@@ -166,36 +201,46 @@ void run(const int rank, const int len, const int blk_size) {
   unordered_map<pair<int, int>, vector<double>> blocks;
   receive_data(rank, len, blk_size, expected_solution, b_vector, blocks);
 
+  // parallel Cholesky decomposition
   ldlt(rank, len, blk_size, blocks);
-  // cout << rank << "'s solution"
-  //      << " ";
-  // for (int i = 0; i < len; i++) {
-  //   cout << expected_solution[i] << " ";
-  // }
-  // cout << endl;
-  // cout << rank << "'s bvector"
-  //      << " ";
-  // for (int i = 0; i < len; i++) {
-  //   cout << b_vector[i] << " ";
-  // }
-  // cout << endl;
 
-  // print blocks one by one
+  // collecting result
   int block_divided_len = len / blk_size;
-  for (int i = 0; i < block_divided_len; i++) {
-    for (int j = 0; j <= i; j++) {
-      MPI_Barrier(MPI_COMM_WORLD);
-      if (get_rank_by_block_id(i, j) == rank) {
-        auto &block = get_blocks(blocks, i, j);
-        cout << rank << "'s block" << i << "," << j << endl;
-        for (int k = 0; k < blk_size; k++) {
-          for (int l = 0; l < blk_size; l++) {
-            cout << block[k * blk_size + l] << " ";
-          }
-          cout << endl;
+  if (rank == 0) {
+    vector<double> full_matrix(len * len, 0.0);
+    auto copy_to_full = [&](const int k, const int l,
+                            const vector<double> &block) {
+      for (int i = 0; i < blk_size; i++) {
+        for (int j = 0; j < blk_size; j++) {
+          full_matrix[(k * blk_size + i) * len + l * blk_size + j] =
+              block[i * blk_size + j];
         }
       }
-      MPI_Barrier(MPI_COMM_WORLD);
+    };
+    for (int i = 0; i < block_divided_len; i++) {
+      for (int j = 0; j <= i; j++) {
+        int source = get_rank_by_block_id(i, j);
+        if (source != rank) {
+          vector<double> tmp(blk_size * blk_size, 0.0);
+          MPI_Recv(tmp.data(), tmp.size(), MPI_DOUBLE, source,
+                   Tag::collect_result, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+          copy_to_full(i, j, tmp);
+        } else {
+          copy_to_full(i, j, get_blocks(blocks, i, j));
+        }
+      }
+    }
+    verify(expected_solution, b_vector, full_matrix);
+  } else { // non rank 0 node
+    for (int i = 0; i < block_divided_len; i++) {
+      for (int j = 0; j <= i; j++) {
+        int source = get_rank_by_block_id(i, j);
+        if (source == rank) {
+          auto &tmp = get_blocks(blocks, i, j);
+          MPI_Send(tmp.data(), tmp.size(), MPI_DOUBLE, 0, Tag::collect_result,
+                   MPI_COMM_WORLD);
+        }
+      }
     }
   }
 

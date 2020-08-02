@@ -6,14 +6,7 @@
 vector<double> solveSym(vector<double> &a, vector<double> &b) {
   int i, j, k;
   int n = b.size();
-
-  vector<double> x(b.size(), 0);
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < n; j++) {
-      cout << a[i * n+ j] << " ";
-    }
-    cout << endl;
-  }
+  vector<double> x(n, 0);
 
   /* LDLT decomposition: A = L * D * L^t */
   for (i = 0; i < n; i++) {
@@ -26,13 +19,6 @@ vector<double> solveSym(vector<double> &a, vector<double> &b) {
       for (k = i + 1; k <= j; k++)
         a[j * n + k] -= aji * a[k * n + i];
     }
-  }
-
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < n; j++) {
-      cout << a[i * n+ j] << " ";
-    }
-    cout << endl;
   }
 
   /* forward solve L y = b: but y is stored in x

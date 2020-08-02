@@ -1,5 +1,6 @@
 
-FLAGS=-std=c++11 -g -Wall -O0
+# FLAGS=-std=c++11 -g -Wall -O0
+FLAGS=-std=c++11 -Wall -O3
 default: all
 
 ldlt_seq: ldlt_seq.cc datagen.cc datagen.h
