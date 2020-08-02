@@ -1,5 +1,5 @@
-#include <iostream>
 #include <cmath>
+#include <iostream>
 
 #include "datagen.h"
 
@@ -20,6 +20,13 @@ vector<double> solveSym(vector<double> &a, vector<double> &b) {
       for (k = i + 1; k <= j; k++)
         a[j * n + k] -= aji * a[k * n + i];
     }
+  }
+
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+      cout << a[i * n+ j] << " ";
+    }
+    cout << endl;
   }
 
   /* forward solve L y = b: but y is stored in x
@@ -49,7 +56,12 @@ vector<double> solveSym(vector<double> &a, vector<double> &b) {
 int main(int argc, char *argv[]) {
 
   int n, i;
-  n = 30;
+  if (argc != 2) {
+    cout << "Usage: ldlt_mpi square_matrix_len" << endl;
+    return 1;
+  }
+  n = stoi(argv[1]);
+
   auto a = gen_matrix(n);
   auto solution = gen_solution(n);
   auto b = gen_b(a, solution);

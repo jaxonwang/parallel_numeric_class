@@ -54,7 +54,9 @@ void gen_and_distribute(const int len, const int blk_size) {
       int target = get_rank_by_block_id(i, j);
       MPI_Send(block_ij.data(), block_ij.size(), MPI_DOUBLE, target,
                Tag::matrix_block, MPI_COMM_WORLD);
+#ifdef DEBUG
       cout << "Sending block" << i << "," << j << " to " << target << endl;
+#endif
     }
   }
 }
@@ -103,44 +105,6 @@ void receive_data(int rank, const int len, const int blk_size,
   }
 }
 
-void chol_block(const int blk_size, vector<double> &a) {
-  int n = blk_size;
-  for (int i = 0; i < n; i++) {
-    double invp = 1.0 / a[i * n + i];
-
-    for (int j = i + 1; j < n; j++) {
-      double aji = a[j * n + i];
-      a[j * n + i] *= invp;
-
-      for (int k = i + 1; k <= j; k++)
-        a[j * n + k] -= aji * a[k * n + i];
-    }
-  }
-}
-
-vector<double> A_mul_Bt(const vector<double> &A, const vector<double> &B) {
-  vector<double> C(B.size(), 0);
-  for (int i = 0; i < blk_size; i++) {
-    for (int j = 0; j < blk_size; j++) {
-      double tmp = 0;
-      for (int k = 0; k < blk_size; k++) {
-        tmp += A[i * blk_size + k] + B[j * blk_size + k];
-      }
-      C[i * blk_size + j] = tmp;
-    }
-  }
-  return C;
-}
-
-void A_sub_B(vector<double> &A, const vector<double> &B) {
-  vector<double> C(B.size(), 0);
-  for (int i = 0; i < blk_size; i++) {
-    for (int j = 0; j < blk_size; j++) {
-      A[i * blk_size + j] -= B[i * blk_size + j];
-    }
-  }
-}
-
 void ldlt(const int rank, const int len, const int blk_size, blocks_t &blocks) {
 
   int block_divided_len = len / blk_size;
@@ -148,18 +112,25 @@ void ldlt(const int rank, const int len, const int blk_size, blocks_t &blocks) {
 
     if (get_rank_by_block_id(0, j) == rank) {
       auto &Ajj = get_blocks(blocks, j, j);
-      chol_block(blk_size, Ajj); // Aii = chol(Aii)
+      chol_block(Ajj, blk_size); // Ajj = chol(Ajj)
+      auto Ajj_inverse = trangular_inverse(Ajj, blk_size);
       for (int i = j + 1; i < block_divided_len; i++) {
         auto &Aij = get_blocks(blocks, i, j);
-        auto newAij = A_mul_Bt(Aij, Ajj); // Aij = Aij * Aii_t
+        auto newAij =
+            A_mul_Bt(Aij, Ajj_inverse, blk_size); // Aij = Aij * Ajj_-t
         Aij = move(newAij);
         for (int k = j + 1; k <= i; k++) {
           int target = get_rank_by_block_id(i, k);
           auto &Lkj = get_blocks(blocks, k, j);
-          MPI_Send(Aij.data(), Aij.size(), MPI_DOUBLE, target, Tag::L_matrix,
-                   MPI_COMM_WORLD);
-          MPI_Send(Lkj.data(), Lkj.size(), MPI_DOUBLE, target, Tag::L_matrix,
-                   MPI_COMM_WORLD);
+          if (target == rank) { // block is local
+            A_sub_B(get_blocks(blocks, i, k), A_mul_Bt(Aij, Lkj, blk_size),
+                    blk_size); // Aik = Aik - Aij * Akj_t
+          } else {
+            MPI_Send(Aij.data(), Aij.size(), MPI_DOUBLE, target, Tag::L_matrix,
+                     MPI_COMM_WORLD);
+            MPI_Send(Lkj.data(), Lkj.size(), MPI_DOUBLE, target, Tag::L_matrix,
+                     MPI_COMM_WORLD);
+          }
         }
       }
     } else {
@@ -175,8 +146,8 @@ void ldlt(const int rank, const int len, const int blk_size, blocks_t &blocks) {
                    MPI_COMM_WORLD, MPI_STATUS_IGNORE);
           MPI_Recv(Lkj.data(), Lkj.size(), MPI_DOUBLE, source, Tag::L_matrix,
                    MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-          A_sub_B(get_blocks(blocks, i, k),
-                  A_mul_Bt(Aij, Lkj)); // Aik = Aik - Aij * Akj_t
+          A_sub_B(get_blocks(blocks, i, k), A_mul_Bt(Aij, Lkj, blk_size),
+                  blk_size); // Aik = Aik - Aij * Akj_t
         }
       }
     }
@@ -195,25 +166,37 @@ void run(const int rank, const int len, const int blk_size) {
   unordered_map<pair<int, int>, vector<double>> blocks;
   receive_data(rank, len, blk_size, expected_solution, b_vector, blocks);
 
-  cout << rank << "'s solution"
-       << " ";
-  for (int i = 0; i < len; i++) {
-    cout << expected_solution[i] << " ";
-  }
-  cout << endl;
-  cout << rank << "'s bvector"
-       << " ";
-  for (int i = 0; i < len; i++) {
-    cout << b_vector[i] << " ";
-  }
-  cout << endl;
+  ldlt(rank, len, blk_size, blocks);
+  // cout << rank << "'s solution"
+  //      << " ";
+  // for (int i = 0; i < len; i++) {
+  //   cout << expected_solution[i] << " ";
+  // }
+  // cout << endl;
+  // cout << rank << "'s bvector"
+  //      << " ";
+  // for (int i = 0; i < len; i++) {
+  //   cout << b_vector[i] << " ";
+  // }
+  // cout << endl;
 
-  for (auto const &b : blocks) {
-    cout << rank << "'s block" << b.first.first << "," << b.first.second;
-    for (auto &i : b.second) {
-      cout << " " << i;
+  // print blocks one by one
+  int block_divided_len = len / blk_size;
+  for (int i = 0; i < block_divided_len; i++) {
+    for (int j = 0; j <= i; j++) {
+      MPI_Barrier(MPI_COMM_WORLD);
+      if (get_rank_by_block_id(i, j) == rank) {
+        auto &block = get_blocks(blocks, i, j);
+        cout << rank << "'s block" << i << "," << j << endl;
+        for (int k = 0; k < blk_size; k++) {
+          for (int l = 0; l < blk_size; l++) {
+            cout << block[k * blk_size + l] << " ";
+          }
+          cout << endl;
+        }
+      }
+      MPI_Barrier(MPI_COMM_WORLD);
     }
-    cout << endl;
   }
 
   if (rank == 0) {

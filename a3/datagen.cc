@@ -6,6 +6,15 @@
 
 using namespace std;
 
+void print_matrix(const vector<double> &A, const int len) {
+  for (int i = 0; i < len; i++) {
+    for (int j = 0; j < len; j++) {
+      cout << A[i * len + j] << " ";
+    }
+    cout << endl;
+  }
+}
+
 vector<double> symMatVec(vector<double> &a, vector<double> &x) {
   vector<double> y(x.size(), 0);
   int i, j;
@@ -21,6 +30,83 @@ vector<double> symMatVec(vector<double> &a, vector<double> &x) {
     y[i] = t;
   }
   return y;
+}
+
+vector<double> trangular_inverse(const vector<double> &A, const int len) {
+  vector<double> tmp(A.size(), 0);
+  for (int j = 0; j < len; j++) {
+    tmp[j * len + j] = 1.0 / A[j * len + j];
+    for (int i = j + 1; i < len; i++) {
+      double s = 0.0;
+      for (int k = j; k < i; k++) {
+        s += A[i * len + k] * tmp[k * len + j];
+      }
+      tmp[i * len + j] = -s / A[i * len + i];
+    }
+  }
+  return tmp;
+}
+
+void chol_block(vector<double> &a, const int len) {
+  int n = len;
+  for (int i = 0; i < n; i++) {
+    double invp = 1.0 / a[i * n + i];
+
+    for (int j = i + 1; j < n; j++) {
+      double aji = a[j * n + i];
+      a[j * n + i] *= invp;
+
+      for (int k = i + 1; k <= j; k++)
+        a[j * n + k] -= aji * a[k * n + i];
+    }
+  }
+}
+
+vector<double> A_mul_Bt(const vector<double> &A, const vector<double> &B,
+                        const int len) {
+  vector<double> C(B.size(), 0);
+  for (int i = 0; i < len; i++) {
+    for (int j = 0; j < len; j++) {
+      double tmp = 0;
+      for (int k = 0; k < len; k++) {
+        tmp += A[i * len + k] * B[j * len + k];
+      }
+      C[i * len + j] = tmp;
+    }
+  }
+  return C;
+}
+
+void transpose(vector<double> &A, const int len) {
+  for (int i = 0; i < len; i++) {
+    for (int j = 0; j < i; j++) {
+      swap(A[i * len + j], A[j * len + i]);
+    }
+  }
+}
+
+vector<double> A_mul_B(const vector<double> &A, const vector<double> &B,
+                       const int len) {
+  vector<double> C(B.size(), 0);
+  for (int i = 0; i < len; i++) {
+    for (int j = 0; j < len; j++) {
+      double tmp = 0;
+      for (int k = 0; k < len; k++) {
+        tmp += A[i * len + k] * B[k * len + j];
+      }
+      C[i * len + j] = tmp;
+    }
+  }
+  return C;
+}
+
+void A_sub_B(vector<double> &A, const vector<double> &B, const int len) {
+  vector<double> C(B.size(), 0);
+  for (int i = 0; i < len; i++) {
+    for (int j = 0; j < len; j++) {
+      A[i * len + j] -= B[i * len + j];
+    }
+  }
 }
 
 vector<double> gen_solution(const int len) { return vector<double>(len, 1.0); }
