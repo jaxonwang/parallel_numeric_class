@@ -50,14 +50,12 @@ vector<double> trangular_inverse(const vector<double> &A, const int len) {
 void chol_block(vector<double> &a, const int len) {
   int n = len;
   for (int i = 0; i < n; i++) {
+    a[i * n + i] = sqrt(a[i * n + i]);
     double invp = 1.0 / a[i * n + i];
-
     for (int j = i + 1; j < n; j++) {
-      double aji = a[j * n + i];
       a[j * n + i] *= invp;
-
       for (int k = i + 1; k <= j; k++)
-        a[j * n + k] -= aji * a[k * n + i];
+        a[j * n + k] -= a[j * n + i] * a[k * n + i];
     }
   }
 }
