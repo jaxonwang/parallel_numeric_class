@@ -33,6 +33,7 @@
 
 *.swp
 
-ldlt_mpi
+ldlt_leftlooking
+ldlt_rightlooking
 ldlt_seq
 test
