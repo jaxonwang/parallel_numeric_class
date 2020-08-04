@@ -115,8 +115,12 @@ void receive_data(int rank, const int len, const int blk_size,
     }
 }
 
-void ldlt_rightlooking(const int rank, const int len, const int blk_size, blocks_t &blocks) {
+void ldlt_rightlooking(const int rank, const int len, const int blk_size,
+                       blocks_t &blocks) {
     int block_divided_len = len / blk_size;
+    int Send_num = 0;
+    double sendtime = 0;
+    double recvtime = 0;
     for (int j = 0; j < block_divided_len; j++) {
         if (get_rank_by_block_id(0, j) == rank) {
             auto &Ajj = get_blocks(blocks, j, j);
@@ -135,10 +139,13 @@ void ldlt_rightlooking(const int rank, const int len, const int blk_size, blocks
                                 A_mul_Bt(Aij, Lkj, blk_size),
                                 blk_size);  // Aik = Aik - Aij * Akj_t
                     } else {
+                        sendtime -= MPI_Wtime();
                         MPI_Send(Aij.data(), Aij.size(), MPI_DOUBLE, target,
                                  Tag::L_matrix, MPI_COMM_WORLD);
                         MPI_Send(Lkj.data(), Lkj.size(), MPI_DOUBLE, target,
                                  Tag::L_matrix, MPI_COMM_WORLD);
+                        sendtime += MPI_Wtime();
+                        Send_num += 2;
                     }
                 }
             }
@@ -150,16 +157,27 @@ void ldlt_rightlooking(const int rank, const int len, const int blk_size, blocks
                     int source = get_rank_by_block_id(i, j);
                     vector<double> Aij(blk_size * blk_size, 0);
                     vector<double> Lkj(blk_size * blk_size, 0);
+
+                    recvtime -= MPI_Wtime();
                     MPI_Recv(Aij.data(), Aij.size(), MPI_DOUBLE, source,
                              Tag::L_matrix, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
                     MPI_Recv(Lkj.data(), Lkj.size(), MPI_DOUBLE, source,
                              Tag::L_matrix, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                    recvtime += MPI_Wtime();
                     A_sub_B(get_blocks(blocks, i, k),
                             A_mul_Bt(Aij, Lkj, blk_size),
                             blk_size);  // Aik = Aik - Aij * Akj_t
                 }
             }
         }
+    }
+    for (int i = 0; i < world_size; i++) {
+        MPI_Barrier(MPI_COMM_WORLD);
+        if (i != rank) continue;
+        cout << "in rank " << i << endl;
+        cout << "Number of send: " << Send_num << endl;
+        cout << "send time : " << sendtime << endl;
+        cout << "recv time : " << recvtime << endl;
     }
 }
 
@@ -196,29 +214,40 @@ void verify(const vector<double> expected, const vector<double> b_vector,
 void ldlt_leftlooking(const int rank, const int len, const int blk_size,
                       blocks_t &blocks) {
     int block_divided_len = len / blk_size;
+    int Bcast_num = 0;
+    double sendtime = 0;
+    double recvtime = 0;
     for (int j = 0; j < block_divided_len; j++) {
         int owner = get_rank_by_block_id(j, 0);
         if (owner == rank) {  // if local is owner
-            // vector<MPI_Request> requests;
+            vector<MPI_Request> requests;
 
             auto &Ajj = get_blocks(blocks, j, j);
             for (int k = 0; k < j; k++) {
                 auto &Ajk = get_blocks(blocks, j, k);
-                // MPI_Request r;
-                // MPI_Ibcast(Ajk.data(), Ajk.size(), MPI_DOUBLE, rank,
-                //            MPI_COMM_WORLD, &r);
-                // requests.push_back(r);
-                MPI_Bcast(Ajk.data(), Ajk.size(), MPI_DOUBLE, owner, MPI_COMM_WORLD);
+                MPI_Request r;
+                sendtime -= MPI_Wtime();
+                MPI_Ibcast(Ajk.data(), Ajk.size(), MPI_DOUBLE, rank,
+                           MPI_COMM_WORLD, &r);
+                // MPI_Bcast(Ajk.data(), Ajk.size(), MPI_DOUBLE, owner,
+                // MPI_COMM_WORLD);
+                sendtime += MPI_Wtime();
+                requests.push_back(r);
+                Bcast_num++;
                 A_sub_B(Ajj, A_mul_Bt(Ajk, Ajk, blk_size),
                         blk_size);  // Ajj -= AjkAjk_t for k: 0~j-1
             }
             chol_block(Ajj, blk_size);
             auto Ajj_inv = trangular_inverse(Ajj, blk_size);
-            // MPI_Request r;
-            // MPI_Ibcast(Ajj.data(), Ajj.size(), MPI_DOUBLE, rank, MPI_COMM_WORLD,
-            //            &r);
-            // requests.push_back(r);
-            MPI_Bcast(Ajj_inv.data(), Ajj_inv.size(), MPI_DOUBLE, owner, MPI_COMM_WORLD);
+            sendtime -= MPI_Wtime();
+            MPI_Request r;
+            MPI_Ibcast(Ajj_inv.data(), Ajj_inv.size(), MPI_DOUBLE, rank, MPI_COMM_WORLD,
+                       &r);
+            // MPI_Bcast(Ajj_inv.data(), Ajj_inv.size(), MPI_DOUBLE, owner,
+            // MPI_COMM_WORLD);
+            sendtime += MPI_Wtime();
+            requests.push_back(r);
+            Bcast_num++;
             // if is local
             for (int i = j + 1; i < block_divided_len; i++) {
                 if (get_rank_by_block_id(i, j) == rank) {
@@ -233,12 +262,18 @@ void ldlt_leftlooking(const int rank, const int len, const int blk_size,
                     Aij = move(newAij);
                 }
             }
-            // MPI_Waitall(requests.size(), requests.data(), MPI_STATUSES_IGNORE);
-        } else { // if not owner
+            MPI_Waitall(requests.size(), requests.data(), MPI_STATUSES_IGNORE);
+        } else {  // if not owner
             for (int k = 0; k < j; k++) {
                 vector<double> Ajk(blk_size * blk_size, 0.0);
-                MPI_Bcast(Ajk.data(), Ajk.size(), MPI_DOUBLE, owner,
-                          MPI_COMM_WORLD);
+                recvtime -= MPI_Wtime();
+                MPI_Request r;
+                MPI_Ibcast(Ajk.data(), Ajk.size(), MPI_DOUBLE, owner,
+                           MPI_COMM_WORLD, &r);
+                MPI_Wait(&r, MPI_STATUSES_IGNORE);
+                // MPI_Bcast(Ajk.data(), Ajk.size(), MPI_DOUBLE, owner,
+                //           MPI_COMM_WORLD);
+                recvtime += MPI_Wtime();
                 for (int i = j + 1; i < block_divided_len; i++) {
                     if (get_rank_by_block_id(i, j) == rank) {
                         auto &Aij = get_blocks(blocks, i, j);
@@ -249,7 +284,14 @@ void ldlt_leftlooking(const int rank, const int len, const int blk_size,
                 }
             }
             vector<double> Ajj(blk_size * blk_size, 0);
-            MPI_Bcast(Ajj.data(), Ajj.size(), MPI_DOUBLE, owner, MPI_COMM_WORLD);
+            recvtime -= MPI_Wtime();
+            MPI_Request r;
+            MPI_Ibcast(Ajj.data(), Ajj.size(), MPI_DOUBLE, owner,
+                       MPI_COMM_WORLD, &r);
+            MPI_Wait(&r, MPI_STATUSES_IGNORE);
+            // MPI_Bcast(Ajj.data(), Ajj.size(), MPI_DOUBLE, owner,
+            // MPI_COMM_WORLD);
+            recvtime += MPI_Wtime();
             for (int i = j + 1; i < block_divided_len; i++) {
                 if (get_rank_by_block_id(i, j) == rank) {
                     auto &Aij = get_blocks(blocks, i, j);
@@ -258,6 +300,14 @@ void ldlt_leftlooking(const int rank, const int len, const int blk_size,
                 }
             }
         }
+    }
+    for (int i = 0; i < world_size; i++) {
+        MPI_Barrier(MPI_COMM_WORLD);
+        if (i != rank) continue;
+        cout << "in rank " << i << endl;
+        cout << "Number of send: " << Bcast_num << endl;
+        cout << "send time : " << sendtime << endl;
+        cout << "recv time : " << recvtime << endl;
     }
 }
 
