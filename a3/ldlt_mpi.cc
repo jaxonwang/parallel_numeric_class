@@ -234,6 +234,9 @@ void ldlt_leftlooking(const int rank, const int len, const int blk_size,
                 sendtime += MPI_Wtime();
                 requests.push_back(r);
                 Bcast_num++;
+            }
+            for (int k = 0; k < j; k++) {
+                auto &Ajk = get_blocks(blocks, j, k);
                 A_sub_B(Ajj, A_mul_Bt(Ajk, Ajk, blk_size),
                         blk_size);  // Ajj -= AjkAjk_t for k: 0~j-1
             }
@@ -334,7 +337,8 @@ void run(const int rank, const int len, const int blk_size) {
     MPI_Barrier(MPI_COMM_WORLD);
     // mesure the time
     double duration = MPI_Wtime() - start;
-    cout << duration << endl;
+    if(rank == 0)
+        cout << duration << endl;
 
     // collecting result
     int block_divided_len = len / blk_size;
