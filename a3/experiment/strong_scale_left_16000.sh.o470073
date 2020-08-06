@@ -1,0 +1,62 @@
+1
+311.963
+error norm = 4.13561e-13
+--- good if error is around n * 1e-16 = 1.6e-12 or less
+2
+155.948
+error norm = 4.13561e-13
+--- good if error is around n * 1e-16 = 1.6e-12 or less
+4
+62.3822
+error norm = 4.13561e-13
+--- good if error is around n * 1e-16 = 1.6e-12 or less
+8
+27.3897
+error norm = 4.13561e-13
+--- good if error is around n * 1e-16 = 1.6e-12 or less
+12
+17.1583
+error norm = 4.13561e-13
+--- good if error is around n * 1e-16 = 1.6e-12 or less
+16
+13.1022
+error norm = 4.13561e-13
+--- good if error is around n * 1e-16 = 1.6e-12 or less
+20
+10.5636
+error norm = 4.13561e-13
+--- good if error is around n * 1e-16 = 1.6e-12 or less
+24
+8.91006
+error norm = 4.13561e-13
+--- good if error is around n * 1e-16 = 1.6e-12 or less
+28
+7.82102
+error norm = 4.13561e-13
+--- good if error is around n * 1e-16 = 1.6e-12 or less
+32
+7.1013
+error norm = 4.13561e-13
+--- good if error is around n * 1e-16 = 1.6e-12 or less
+36
+6.43779
+error norm = 4.13561e-13
+--- good if error is around n * 1e-16 = 1.6e-12 or less
+40
+6.12265
+error norm = 4.13561e-13
+--- good if error is around n * 1e-16 = 1.6e-12 or less
+44
+5.7878
+error norm = 4.13561e-13
+--- good if error is around n * 1e-16 = 1.6e-12 or less
+48
+5.57215
+error norm = 4.13561e-13
+--- good if error is around n * 1e-16 = 1.6e-12 or less
+52
+5.48364
+error norm = 4.13561e-13
+--- good if error is around n * 1e-16 = 1.6e-12 or less
+56
+5.28397

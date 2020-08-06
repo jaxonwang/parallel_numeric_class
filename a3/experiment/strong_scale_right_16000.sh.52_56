@@ -1,0 +1,440 @@
+52
+in rank 0
+Number of send: 912620
+send time : 1.69831
+recv time : 76.4961
+in rank 1
+Number of send: 907410
+send time : 1.65955
+recv time : 76.5765
+in rank 2
+Number of send: 902220
+send time : 1.64967
+recv time : 76.6186
+in rank 3
+Number of send: 897050
+send time : 1.64025
+recv time : 76.6017
+in rank 4
+Number of send: 891900
+send time : 1.60377
+recv time : 76.6462
+in rank 5
+Number of send: 886770
+send time : 1.60861
+recv time : 76.6232
+in rank 6
+Number of send: 881660
+send time : 1.64291
+recv time : 76.5841
+in rank 7
+Number of send: 876570
+send time : 1.62898
+recv time : 76.6098
+in rank 8
+Number of send: 871500
+send time : 1.62084
+recv time : 76.6223
+in rank 9
+Number of send: 866450
+send time : 1.58736
+recv time : 76.6545
+in rank 10
+Number of send: 861420
+send time : 1.58267
+recv time : 76.6438
+in rank 11
+Number of send: 856410
+send time : 1.58625
+recv time : 76.6479
+in rank 12
+Number of send: 851420
+send time : 1.58315
+recv time : 76.653
+in rank 13
+Number of send: 846450
+send time : 1.59807
+recv time : 76.6226
+in rank 14
+Number of send: 841500
+send time : 1.59725
+recv time : 76.6421
+in rank 15
+Number of send: 836570
+send time : 1.55762
+recv time : 76.678
+in rank 16
+Number of send: 831660
+send time : 1.54822
+recv time : 76.6934
+in rank 17
+Number of send: 826770
+send time : 1.5574
+recv time : 76.6783
+in rank 18
+Number of send: 821900
+send time : 1.54423
+recv time : 76.6992
+in rank 19
+Number of send: 817050
+send time : 1.54737
+recv time : 76.6896
+in rank 20
+Number of send: 812220
+send time : 1.54416
+recv time : 76.6928
+in rank 21
+Number of send: 807410
+send time : 1.57007
+recv time : 76.6717
+in rank 22
+Number of send: 802620
+send time : 1.53128
+recv time : 76.717
+in rank 23
+Number of send: 797850
+send time : 1.501
+recv time : 76.7477
+in rank 24
+Number of send: 793100
+send time : 1.51338
+recv time : 76.7459
+in rank 25
+Number of send: 788370
+send time : 1.51709
+recv time : 76.7267
+in rank 26
+Number of send: 783660
+send time : 1.36492
+recv time : 76.9397
+in rank 27
+Number of send: 778970
+send time : 1.35935
+recv time : 76.9433
+in rank 28
+Number of send: 774300
+send time : 1.37893
+recv time : 76.9354
+in rank 29
+Number of send: 769650
+send time : 1.35941
+recv time : 76.9494
+in rank 30
+Number of send: 765020
+send time : 1.33341
+recv time : 76.9852
+in rank 31
+Number of send: 760410
+send time : 1.35618
+recv time : 76.9665
+in rank 32
+Number of send: 755820
+send time : 1.36225
+recv time : 76.8729
+in rank 33
+Number of send: 751230
+send time : 1.33134
+recv time : 76.9103
+in rank 34
+Number of send: 746658
+send time : 1.33746
+recv time : 76.9244
+in rank 35
+Number of send: 742104
+send time : 1.32177
+recv time : 76.9399
+in rank 36
+Number of send: 737568
+send time : 1.32525
+recv time : 76.9259
+in rank 37
+Number of send: 733050
+send time : 1.30706
+recv time : 76.9538
+in rank 38
+Number of send: 728550
+send time : 1.31105
+recv time : 76.958
+in rank 39
+Number of send: 724068
+send time : 1.32072
+recv time : 76.9491
+in rank 40
+Number of send: 719604
+send time : 1.32041
+recv time : 76.954
+in rank 41
+Number of send: 715158
+send time : 1.28422
+recv time : 76.9903
+in rank 42
+Number of send: 710730
+send time : 1.31538
+recv time : 76.9726
+in rank 43
+Number of send: 706320
+send time : 1.29623
+recv time : 76.976
+in rank 44
+Number of send: 701928
+send time : 1.28168
+recv time : 77.0118
+in rank 45
+Number of send: 697554
+send time : 1.29087
+recv time : 77.0006
+in rank 46
+Number of send: 693198
+send time : 1.29503
+recv time : 77.0001
+in rank 47
+Number of send: 688860
+send time : 1.30473
+recv time : 76.9926
+in rank 48
+Number of send: 684540
+send time : 1.27003
+recv time : 77.0505
+in rank 49
+Number of send: 680238
+send time : 1.26057
+recv time : 77.0671
+in rank 50
+Number of send: 675954
+send time : 1.2608
+recv time : 77.0781
+in rank 51
+Number of send: 671688
+send time : 1.25925
+recv time : 77.0651
+total time: 82.5605
+error norm = 4.13561e-13
+--- good if error is around n * 1e-16 = 1.6e-12 or less
+56
+in rank 0
+Number of send: 858108
+send time : 1.66591
+recv time : 81.0258
+in rank 1
+Number of send: 853230
+send time : 1.64428
+recv time : 81.1062
+in rank 2
+Number of send: 848370
+send time : 1.61791
+recv time : 81.1198
+in rank 3
+Number of send: 843528
+send time : 1.59539
+recv time : 81.1434
+in rank 4
+Number of send: 838704
+send time : 1.58528
+recv time : 81.1407
+in rank 5
+Number of send: 833898
+send time : 1.58817
+recv time : 81.115
+in rank 6
+Number of send: 829110
+send time : 1.6018
+recv time : 81.129
+in rank 7
+Number of send: 824340
+send time : 1.58716
+recv time : 81.135
+in rank 8
+Number of send: 819588
+send time : 1.59698
+recv time : 81.1362
+in rank 9
+Number of send: 814854
+send time : 1.56024
+recv time : 81.1706
+in rank 10
+Number of send: 810138
+send time : 1.5671
+recv time : 81.1641
+in rank 11
+Number of send: 805440
+send time : 1.55317
+recv time : 81.1821
+in rank 12
+Number of send: 800760
+send time : 1.55442
+recv time : 81.1738
+in rank 13
+Number of send: 796098
+send time : 1.58186
+recv time : 81.1396
+in rank 14
+Number of send: 791454
+send time : 1.57107
+recv time : 81.1548
+in rank 15
+Number of send: 786828
+send time : 1.52953
+recv time : 81.2001
+in rank 16
+Number of send: 782220
+send time : 1.55015
+recv time : 81.19
+in rank 17
+Number of send: 777630
+send time : 1.52704
+recv time : 81.1933
+in rank 18
+Number of send: 773058
+send time : 1.518
+recv time : 81.2221
+in rank 19total time: 86.8837
+
+Number of send: 768504
+send time : 1.5128
+recv time : 81.2337
+in rank 20
+Number of send: 763968
+send time : 1.51792
+recv time : 81.2094
+in rank 21
+Number of send: 759450
+send time : 1.5296
+recv time : 81.1976
+in rank 22
+Number of send: 754950
+send time : 1.49079
+recv time : 81.2444
+in rank 23
+Number of send: 750468
+send time : 1.4951
+recv time : 81.2496
+in rank 24
+Number of send: 746004
+send time : 1.47112
+recv time : 81.2818
+in rank 25
+Number of send: 741558
+send time : 1.49911
+recv time : 81.2423
+in rank 26
+Number of send: 737130
+send time : 1.50573
+recv time : 81.2396
+in rank 27
+Number of send: 732720
+send time : 1.51414
+recv time : 81.2385
+in rank 28
+Number of send: 728328
+send time : 1.38627
+recv time : 81.4325
+in rank 29
+Number of send: 723954
+send time : 1.37023
+recv time : 81.4553
+in rank 30
+Number of send: 719598
+send time : 1.34657
+recv time : 81.4681
+in rank 31
+Number of send: 715260
+send time : 1.31827
+recv time : 81.5144
+in rank 32
+Number of send: 710940
+send time : 1.32923
+recv time : 81.5016
+in rank 33
+Number of send: 706638
+send time : 1.33822
+recv time : 81.5033
+in rank 34
+Number of send: 702354
+send time : 1.34907
+recv time : 81.485
+in rank 35
+Number of send: 698088
+send time : 1.33802
+recv time : 81.5004
+in rank 36
+Number of send: 693840
+send time : 1.30914
+recv time : 81.5429
+in rank 37
+Number of send: 689610
+send time : 1.29037
+recv time : 81.5661
+in rank 38
+Number of send: 685398
+send time : 1.30138
+recv time : 81.5434
+in rank 39
+Number of send: 681204
+send time : 1.30449
+recv time : 81.5415
+in rank 40
+Number of send: 677028
+send time : 1.30437
+recv time : 81.5462
+in rank 41
+Number of send: 672870
+send time : 1.31167
+recv time : 81.5525
+in rank 42
+Number of send: 668730
+send time : 1.29066
+recv time : 81.5651
+in rank 43
+Number of send: 664608
+send time : 1.29516
+recv time : 81.5703
+in rank 44
+Number of send: 660504
+send time : 1.29412
+recv time : 81.5581
+in rank 45
+Number of send: 656418
+send time : 1.27941
+recv time : 81.599
+in rank 46
+Number of send: 652350
+send time : 1.28999
+recv time : 81.6
+in rank 47
+Number of send: 648300
+send time : 1.28308
+recv time : 81.6087
+in rank 48
+Number of send: 644268
+send time : 1.28238
+recv time : 81.6203
+in rank 49
+Number of send: 640254
+send time : 1.29386
+recv time : 81.5867
+in rank 50
+Number of send: 636258
+send time : 1.25285
+recv time : 81.6426
+in rank 51
+Number of send: 632280
+send time : 1.24088
+recv time : 81.6694
+in rank 52
+Number of send: 628320
+send time : 1.25102
+recv time : 81.5652
+in rank 53
+Number of send: 624360
+send time : 1.2568
+recv time : 81.5517
+in rank 54
+Number of send: 620416
+send time : 1.25592
+recv time : 81.5704
+in rank 55
+Number of send: 616488
+send time : 1.25223
+recv time : 81.5729
+error norm = 4.13561e-13
+--- good if error is around n * 1e-16 = 1.6e-12 or less

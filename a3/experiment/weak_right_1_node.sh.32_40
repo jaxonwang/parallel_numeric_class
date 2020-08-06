@@ -1,0 +1,445 @@
+mpiexec.hydra -n 32 ./ldlt_rightlooking 20160 32
+in rank 0
+Number of send: 2718640
+send time : 4.74466
+recv time : 145.803
+in rank 1
+Number of send: 2706020
+send time : 4.65393
+recv time : 145.956
+in rank 2
+Number of send: 2693440
+send time : 4.62662
+recv time : 145.989
+in rank 3
+Number of send: 2680900
+send time : 4.59868
+recv time : 146.01
+in rank 4
+Number of send: 2668400
+send time : 4.56942
+recv time : 146.021
+in rank 5
+Number of send: 2655940
+send time : 4.59057
+recv time : 146.078
+in rank 6
+Number of send: 2643520
+send time : 4.65861
+recv time : 145.991
+in rank 7
+Number of send: 2631140
+send time : 4.61345
+recv time : 146.012
+in rank 8
+Number of send: 2618800
+send time : 4.51361
+recv time : 146.127
+in rank 9
+Number of send: 2606500
+send time : 4.52413
+recv time : 146.138
+in rank 10
+Number of send: 2594240
+send time : 4.54291
+recv time : 146.14
+in rank 11
+Number of send: 2582020
+send time : 4.51823
+recv time : 146.072
+in rank 12
+Number of send: 2569840
+send time : 4.51029
+recv time : 146.126
+in rank 13
+Number of send: 2557700
+send time : 4.54435
+recv time : 146.103
+in rank 14
+Number of send: 2545600
+send time : 4.47597
+recv time : 146.172
+in rank 15
+Number of send: 2533540
+send time : 4.42372
+recv time : 146.213
+in rank 16
+Number of send: 2521520
+send time : 4.37866
+recv time : 146.288
+in rank 17
+Number of send: 2509540
+send time : 4.39073
+recv time : 146.252
+in rank 18
+Number of send: 2497600
+send time : 4.33892
+recv time : 146.338
+in rank 19
+Number of send: 2485700
+send time : 4.36687
+recv time : 146.298
+in rank 20
+Number of send: 2473840
+send time : 4.37268
+recv time : 146.383
+in rank 21
+Number of send: 2462020
+send time : 4.31396
+recv time : 146.326
+in rank 22
+Number of send: 2450240
+send time : 4.34419
+recv time : 146.346
+in rank 23
+Number of send: 2438460
+send time : 4.42701
+recv time : 146.245
+in rank 24
+Number of send: 2426718
+send time : 4.33299
+recv time : 146.295
+in rank 25
+Number of send: 2415014
+send time : 4.20978
+recv time : 146.502
+in rank 26
+Number of send: 2403348
+send time : 4.23829
+recv time : 146.469
+in rank 27
+Number of send: 2391720
+send time : 4.17325
+recv time : 146.524
+in rank 28
+Number of send: 2380130
+send time : 4.22689
+recv time : 146.462
+in rank 29
+Number of send: 2368578
+send time : 4.25591
+recv time : 146.366
+in rank 30
+Number of send: 2357064
+send time : 4.24405
+recv time : 146.416
+in rank 31
+Number of send: 2345588
+send time : 4.20976
+recv time : 146.494
+total time: 163.256
+error norm = 6.73184e-13
+--- good if error is around n * 1e-16 = 2.016e-12 or less
+mpiexec.hydra -n 36 ./ldlt_rightlooking 20960 32
+in rank 0
+Number of send: 2741928
+send time : 4.90292
+recv time : 166.024
+in rank 1
+Number of send: 2729730
+send time : 4.80126
+recv time : 166.152
+in rank 2
+Number of send: 2717570
+send time : 4.76499
+recv time : 166.192
+in rank 3
+Number of send: 2705448
+send time : 4.66791
+recv time : 166.321
+in rank 4
+Number of send: 2693364
+send time : 4.63615
+recv time : 166.348
+in rank 5
+Number of send: 2681318
+send time : 4.66947
+recv time : 166.289
+in rank 6
+Number of send: 2669310
+send time : 4.7197
+recv time : 166.192
+in rank 7
+Number of send: 2657340
+send time : 4.70736
+recv time : 166.21
+in rank 8
+Number of send: 2645370
+send time : 4.65473
+recv time : 166.296
+in rank 9
+Number of send: 2633436
+send time : 4.60721
+recv time : 166.362
+in rank 10
+Number of send: 2621538
+send time : 4.60739
+recv time : 166.355
+in rank 11
+Number of send: 2609676
+send time : 4.59954
+recv time : 166.331
+in rank 12
+Number of send: 2597850
+send time : 4.61568
+recv time : 166.332
+in rank 13
+Number of send: 2586060
+send time : 4.65729
+recv time : 166.234
+in rank 14
+Number of send: 2574306
+send time : 4.65914
+recv time : 166.301
+in rank 15
+Number of send: 2562588
+send time : 4.59148
+recv time : 166.374
+in rank 16
+Number of send: 2550906
+send time : 4.60183
+recv time : 166.359
+in rank 17
+Number of send: 2539260
+send time : 4.51745
+recv time : 166.436
+in rank 18
+Number of send: 2527650
+send time : 4.43663
+recv time : 166.617
+in rank 19
+Number of send: 2516076
+send time : 4.37041
+recv time : 166.719
+in rank 20
+Number of send: 2504538
+send time : 4.32894
+recv time : 166.751
+in rank 21
+Number of send: 2493036
+send time : 4.36171
+recv time : 166.804
+in rank 22
+Number of send: 2481570
+send time : 4.33215
+recv time : 166.821
+in rank 23
+Number of send: 2470140
+send time : 4.37001
+recv time : 166.771
+in rank 24
+Number of send: 2458746
+send time : 4.4336
+recv time : 166.63
+in rank 25
+Number of send: 2447388
+send time : 4.31146
+recv time : 166.81
+in rank 26
+Number of send: 2436066
+send time : 4.29626
+recv time : 166.833
+in rank 27
+Number of send: 2424780
+send time : 4.27828
+recv time : 166.877
+in rank 28
+Number of send: 2413530
+send time : 4.28844
+recv time : 166.838
+in rank 29
+Number of send: 2402316
+send time : 4.22365
+recv time : 166.919
+in rank 30
+Number of send: 2391138
+send time : 4.27395
+recv time : 166.856
+in rank 31
+Number of send: 2379996
+send time : 4.28811
+recv time : 166.831
+in rank 32
+Number of send: 2368890
+send time : 4.31766
+recv time : 166.789
+in rank 33
+Number of send: 2357820
+send time : 4.26107
+recv time : 166.913
+in rank 34
+Number of send: 2346786
+send time : 4.27555
+recv time : 166.891
+in rank 35
+Number of send: 2335788
+send time : 4.20938
+recv time : 166.943
+total time: 183.71
+error norm = 6.72688e-13
+--- good if error is around n * 1e-16 = 2.096e-12 or less
+mpiexec.hydra -n 40 ./ldlt_rightlooking 21728 32
+in rank 0
+Number of send: 2772666
+send time : 4.95859
+recv time : 188.154
+in rank 1
+Number of send: 2760766
+send time : 4.93208
+recv time : 188.282
+in rank 2
+Number of send: 2748900
+send time : 4.83878
+recv time : 188.41
+in rank 3
+Number of send: 2737068
+send time : 4.82964
+recv time : 188.422
+in rank 4
+Number of send: 2725270
+send time : 4.80627
+recv time : 188.437
+in rank 5
+Number of send: 2713506
+send time : 4.8468
+recv time : 188.393
+in rank 6
+Number of send: 2701776
+send time : 4.90202
+recv time : 188.306
+in rank 7
+Number of send: 2690080
+send time : 4.84507
+recv time : 188.466
+in rank 8
+Number of send: 2678418
+send time : 4.86142
+recv time : 188.375
+in rank 9
+Number of send: 2666790
+send time : 4.71776
+recv time : 188.519
+in rank 10
+Number of send: 2655196
+send time : 4.78794
+recv time : 188.432
+in rank 11
+Number of send: 2643636
+send time : 4.80653
+recv time : 188.419
+in rank 12
+Number of send: 2632110
+send time : 4.76477
+recv time : 188.422
+in rank 13
+Number of send: 2620618
+send time : 4.79719
+recv time : 188.399
+in rank 14
+Number of send: 2609160
+send time : 4.7838
+recv time : 188.42
+in rank 15
+Number of send: 2597736
+send time : 4.7928
+recv time : 188.408
+in rank 16
+Number of send: 2586346
+send time : 4.7659
+recv time : 188.462
+in rank 17
+Number of send: 2574990
+send time : 4.70252
+recv time : 188.523
+in rank 18
+Number of send: 2563668
+send time : 4.63937
+recv time : 188.63
+in rank 19
+Number of send: 2552380
+send time : 4.66643
+recv time : 188.535
+in rank 20
+Number of send: 2541126
+send time : 4.55466
+recv time : 189.008
+in rank 21
+Number of send: 2529906
+send time : 4.45179
+recv time : 189.154
+in rank 22
+Number of send: 2518720
+send time : 4.44457
+recv time : 189.148
+in rank 23
+Number of send: 2507568
+send time : 4.37203
+recv time : 189.252
+in rank 24
+Number of send: 2496450
+send time : 4.34603
+recv time : 189.264
+in rank 25
+Number of send: 2485366
+send time : 4.42403
+recv time : 189.194
+in rank 26
+Number of send: 2474316
+send time : 4.436
+recv time : 189.131
+in rank 27
+Number of send: 2463300
+send time : 4.38299
+recv time : 189.208
+in rank 28
+Number of send: 2452318
+send time : 4.31531
+recv time : 189.302
+in rank 29
+Number of send: 2441370
+send time : 4.39249
+recv time : 189.265
+in rank 30
+Number of send: 2430456
+send time : 4.35605
+recv time : 189.249
+in rank 31
+Number of send: 2419576
+send time : 4.29389
+recv time : 189.34
+in rank 32
+Number of send: 2408730
+send time : 4.32224
+recv time : 189.335
+in rank 33
+Number of send: 2397918
+send time : 4.34584
+recv time : 189.291
+in rank 34
+Number of send: 2387140
+send time : 4.28317
+recv time : 189.361
+in rank 35
+Number of send: 2376396
+send time : 4.3692
+recv time : 189.317
+in rank 36
+Number of send: 2365686
+send time : 4.30117
+recv time : 189.4
+in rank 37
+Number of send: 2355010
+send time : 4.22458
+recv time : 189.497
+in rank 38
+Number of send: 2344368
+send time : 4.20069
+recv time : 189.536
+in rank 39
+Number of send: 2333760
+send time : 4.23337
+recv time : 189.463
+total time: 206.52
+error norm = 6.79612e-13
+--- good if error is around n * 1e-16 = 2.1728e-12 or less
+mpiexec.hydra -n 44 ./ldlt_rightlooking 22432 32

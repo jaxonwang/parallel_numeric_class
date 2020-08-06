@@ -1,0 +1,129 @@
+1
+in rank 0
+Number of send: 0
+send time : 0
+recv time : 0
+total time: 313.345
+error norm = 4.13561e-13
+--- good if error is around n * 1e-16 = 1.6e-12 or less
+2
+in rank 0
+Number of send: 10479250
+send time : 21.5148
+recv time : 33.9359
+in rank 1
+Number of send: 10416500
+send time : 21.3779
+recv time : 33.2038
+total time: 171.316
+error norm = 4.13561e-13
+--- good if error is around n * 1e-16 = 1.6e-12 or less
+4
+in rank 0
+Number of send: 7906500
+send time : 13.2663
+recv time : 47.8338
+in rank 1
+Number of send: 7859250
+send time : 13.3338
+recv time : 48.4224
+in rank 2
+Number of send: 7812250
+send time : 13.0515
+recv time : 49.8717
+in rank 3
+Number of send: 7765500
+send time : 13.013total time: 115.293
+
+recv time : 51.6876
+error norm = 4.13561e-13
+--- good if error is around n * 1e-16 = 1.6e-12 or less
+8
+in rank 0
+Number of send: 4667124
+send time : 9.12187
+recv time : 68.7814
+in rank 1
+Number of send: 4639404
+send time : 9.08106
+recv time : 68.9828
+in rank 2
+Number of send: 4611810
+send time : 8.94047
+recv time : 69.1877
+in rank 3
+Number of send: 4584342
+send time : 9.16142
+recv time : 68.9041
+in rank 4
+Number of send: 4557000
+send time : 8.7783
+recv time : 69.4683
+in rank 5
+Number of send: 4529658
+send time : 8.84984
+recv time : 69.5835
+in rank 6
+Number of send: 4502440
+send time : 8.70801
+recv time : 69.7505
+in rank 7
+Number of send: 4475346
+send time : 8.78591
+recv time : 69.6157
+total time: 103.716
+error norm = 4.13561e-13
+--- good if error is around n * 1e-16 = 1.6e-12 or less
+12
+in rank 0
+Number of send: 3298260
+send time : 5.86058
+recv time : 71.8735
+in rank 1
+Number of send: 3278730
+send time : 5.70531
+recv time : 72.1199
+in rank 2
+Number of send: 3259284
+send time : 5.76867
+recv time : 71.9507
+in rank 3
+Number of send: 3239922
+send time : 5.73226
+recv time : 71.9898
+in rank 4
+Number of send: 3220644
+send time : 5.67844
+recv time : 72.1402
+in rank 5
+Number of send: 3201450
+send time : 5.71525
+recv time : 71.9835
+in rank 6
+Number of send: 3182340
+send time : 5.55238
+recv time : 72.3056
+in rank 7
+Number of send: 3163314
+send time : 6.39847
+recv time : 71.392
+in rank 8
+Number of send: 3144372
+send time : 6.2705
+recv time : 71.679
+in rank 9
+Number of send: 3125430
+send time : 6.29399
+recv time : 71.6517
+in rank 10
+Number of send: 3106570
+send time : 6.28137
+recv time : 71.6443
+in rank 11
+Number of send: 3087792
+send time : 6.26635
+recv time : 71.631
+total time: 94.8694
+error norm = 4.13561e-13
+--- good if error is around n * 1e-16 = 1.6e-12 or less
+16

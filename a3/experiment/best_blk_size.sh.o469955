@@ -1,0 +1,90 @@
+16
+7.06306
+error norm = 3.72902e-13
+--- good if error is around n * 1e-16 = 1.28e-12 or less
+32
+3.80351
+error norm = 3.68123e-13
+--- good if error is around n * 1e-16 = 1.28e-12 or less
+64
+7.7351
+error norm = 3.6366e-13
+--- good if error is around n * 1e-16 = 1.28e-12 or less
+128
+9.85481
+error norm = 3.6357e-13
+--- good if error is around n * 1e-16 = 1.28e-12 or less
+256
+14.3312
+error norm = 3.64671e-13
+--- good if error is around n * 1e-16 = 1.28e-12 or less
+512
+32.0948
+error norm = 3.67693e-13
+--- good if error is around n * 1e-16 = 1.28e-12 or less
+1024
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+2048
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size
+square_matrix_len should be divisible by blk_size

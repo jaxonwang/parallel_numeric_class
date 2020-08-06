@@ -118,7 +118,7 @@ void receive_data(int rank, const int len, const int blk_size,
 void ldlt_rightlooking(const int rank, const int len, const int blk_size,
                        blocks_t &blocks) {
     int block_divided_len = len / blk_size;
-    int Send_num = 0;
+    long long Send_num = 0;
     double sendtime = 0;
     double recvtime = 0;
     for (int j = 0; j < block_divided_len; j++) {
@@ -214,7 +214,7 @@ void verify(const vector<double> expected, const vector<double> b_vector,
 void ldlt_leftlooking(const int rank, const int len, const int blk_size,
                       blocks_t &blocks) {
     int block_divided_len = len / blk_size;
-    int Bcast_num = 0;
+    long long Bcast_num = 0;
     double sendtime = 0;
     double recvtime = 0;
     for (int j = 0; j < block_divided_len; j++) {
@@ -304,6 +304,7 @@ void ldlt_leftlooking(const int rank, const int len, const int blk_size,
             }
         }
     }
+
     for (int i = 0; i < world_size; i++) {
         MPI_Barrier(MPI_COMM_WORLD);
         if (i != rank) continue;
@@ -312,6 +313,7 @@ void ldlt_leftlooking(const int rank, const int len, const int blk_size,
         cout << "send time : " << sendtime << endl;
         cout << "recv time : " << recvtime << endl;
     }
+
 }
 
 void run(const int rank, const int len, const int blk_size) {
@@ -338,7 +340,7 @@ void run(const int rank, const int len, const int blk_size) {
     // mesure the time
     double duration = MPI_Wtime() - start;
     if(rank == 0)
-        cout << duration << endl;
+        cout << "total time: "<<duration << endl;
 
     // collecting result
     int block_divided_len = len / blk_size;
