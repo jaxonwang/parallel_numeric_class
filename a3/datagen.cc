@@ -4,7 +4,11 @@
 #include <string>
 #include <vector>
 
+#include <Eigen/Dense>
+#include <Eigen/Cholesky>
+
 using namespace std;
+using namespace Eigen;
 
 void print_matrix(const vector<double> &A, const int len) {
     for (int i = 0; i < len; i++) {
@@ -30,6 +34,24 @@ vector<double> symMatVec(vector<double> &a, vector<double> &x) {
     return y;
 }
 
+inline MatrixXd to_eigen(const vector<double> &a, const int len){
+    MatrixXd m(len, len);
+    for (int i = 0; i < len; i++) {
+        for (int j = 0; j < len; j++) {
+           m(i, j) = a[i*len + j];
+        }
+    }
+    return m;
+}
+
+inline void eg_to_vector(vector<double> &a, const int len, const MatrixXd &m){
+    for (int i = 0; i < len; i++) {
+        for (int j = 0; j < len; j++) {
+           a[i*len + j] = m(i,j);
+        }
+    }
+}
+
 vector<double> trangular_inverse(const vector<double> &A, const int len) {
     vector<double> tmp(A.size(), 0);
     for (int j = 0; j < len; j++) {
@@ -45,6 +67,14 @@ vector<double> trangular_inverse(const vector<double> &A, const int len) {
     return tmp;
 }
 
+vector<double> trangular_inverse_omp(const vector<double> &A, const int len) {
+    vector<double> tmp(A.size(), 0);
+    const Map<const Matrix<double, Dynamic, Dynamic, RowMajor>> m1(A.data(), len, len);
+    Map<Matrix<double, Dynamic, Dynamic, RowMajor>> m2(tmp.data(), len, len);
+    m2 = m1.inverse();
+    return tmp;
+}
+
 void chol_block(vector<double> &a, const int len) {
     int n = len;
     for (int i = 0; i < n; i++) {
@@ -56,6 +86,32 @@ void chol_block(vector<double> &a, const int len) {
                 a[j * n + k] -= a[j * n + i] * a[k * n + i];
         }
     }
+}
+
+void transpose(vector<double> &A, const int len) {
+    for (int i = 0; i < len; i++) {
+        for (int j = 0; j < i; j++) {
+            swap(A[i * len + j], A[j * len + i]);
+        }
+    }
+}
+
+void chol_omp(vector<double> &a, const int len) {
+    auto m = to_eigen(a, len);
+    LLT<Ref<decltype(m)>> l(m);
+    eg_to_vector(a, len, l.matrixL());
+}
+
+vector<double> A_mul_Bt_omp(const vector<double> &A, const vector<double> &B,
+                        const int len) {
+    vector<double> C(B.size(), 0);
+
+    const Map<const Matrix<double, Dynamic, Dynamic, RowMajor>> m1(A.data(), len, len);
+    const Map<const Matrix<double, Dynamic, Dynamic, RowMajor>> m2(B.data(), len, len);
+    Map<Matrix<double, Dynamic, Dynamic, RowMajor>> m3(C.data(), len, len);
+    m3 = m1 * m2.transpose();
+
+    return C;
 }
 
 vector<double> A_mul_Bt(const vector<double> &A, const vector<double> &B,
@@ -73,14 +129,6 @@ vector<double> A_mul_Bt(const vector<double> &A, const vector<double> &B,
     return C;
 }
 
-void transpose(vector<double> &A, const int len) {
-    for (int i = 0; i < len; i++) {
-        for (int j = 0; j < i; j++) {
-            swap(A[i * len + j], A[j * len + i]);
-        }
-    }
-}
-
 vector<double> A_mul_B(const vector<double> &A, const vector<double> &B,
                        const int len) {
     vector<double> C(B.size(), 0);
@@ -96,6 +144,11 @@ vector<double> A_mul_B(const vector<double> &A, const vector<double> &B,
     return C;
 }
 
+void A_sub_B_omp(vector<double> &A, const vector<double> &B, const int len) {
+    Map<Matrix<double, Dynamic, Dynamic, RowMajor>> m1(A.data(), len, len);
+    const Map<const Matrix<double, Dynamic, Dynamic, RowMajor>> m2(B.data(), len, len);
+    m1 -= m2;
+}
 void A_sub_B(vector<double> &A, const vector<double> &B, const int len) {
     vector<double> C(B.size(), 0);
     for (int i = 0; i < len; i++) {

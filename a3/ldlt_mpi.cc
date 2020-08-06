@@ -237,11 +237,11 @@ void ldlt_leftlooking(const int rank, const int len, const int blk_size,
             }
             for (int k = 0; k < j; k++) {
                 auto &Ajk = get_blocks(blocks, j, k);
-                A_sub_B(Ajj, A_mul_Bt(Ajk, Ajk, blk_size),
+                A_sub_B_omp(Ajj, A_mul_Bt_omp(Ajk, Ajk, blk_size),
                         blk_size);  // Ajj -= AjkAjk_t for k: 0~j-1
             }
-            chol_block(Ajj, blk_size);
-            auto Ajj_inv = trangular_inverse(Ajj, blk_size);
+            chol_omp(Ajj, blk_size);
+            auto Ajj_inv = trangular_inverse_omp(Ajj, blk_size);
             sendtime -= MPI_Wtime();
             MPI_Request r;
             MPI_Ibcast(Ajj_inv.data(), Ajj_inv.size(), MPI_DOUBLE, rank, MPI_COMM_WORLD,
@@ -258,10 +258,10 @@ void ldlt_leftlooking(const int rank, const int len, const int blk_size,
                     for (int k = 0; k < j; k++) {
                         auto &Aik = get_blocks(blocks, i, k);
                         auto &Ajk = get_blocks(blocks, j, k);
-                        A_sub_B(Aij, A_mul_Bt(Aik, Ajk, blk_size),
+                        A_sub_B_omp(Aij, A_mul_Bt_omp(Aik, Ajk, blk_size),
                                 blk_size);  // Aij -= AjkAjk_t for k: 0~j-1
                     }
-                    auto newAij = A_mul_Bt(Aij, Ajj_inv, blk_size);
+                    auto newAij = A_mul_Bt_omp(Aij, Ajj_inv, blk_size);
                     Aij = move(newAij);
                 }
             }
@@ -281,7 +281,7 @@ void ldlt_leftlooking(const int rank, const int len, const int blk_size,
                     if (get_rank_by_block_id(i, j) == rank) {
                         auto &Aij = get_blocks(blocks, i, j);
                         auto &Aik = get_blocks(blocks, i, k);
-                        A_sub_B(Aij, A_mul_Bt(Aik, Ajk, blk_size),
+                        A_sub_B_omp(Aij, A_mul_Bt_omp(Aik, Ajk, blk_size),
                                 blk_size);  // Aij -= AjkAjk_t for k: 0~j-1
                     }
                 }
@@ -298,7 +298,7 @@ void ldlt_leftlooking(const int rank, const int len, const int blk_size,
             for (int i = j + 1; i < block_divided_len; i++) {
                 if (get_rank_by_block_id(i, j) == rank) {
                     auto &Aij = get_blocks(blocks, i, j);
-                    auto newAij = A_mul_Bt(Aij, Ajj, blk_size);
+                    auto newAij = A_mul_Bt_omp(Aij, Ajj, blk_size);
                     Aij = move(newAij);
                 }
             }
